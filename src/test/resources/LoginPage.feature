@@ -14,7 +14,9 @@ Feature: Login Functionslity
 
   Scenario: Unsuccessful login
     Given I open the website
+    And I click on the My account section
     When I insert the invalidEmailAddress
     And I press Next button
+    When I insert the invalid password
     Then an error message is displayed
     And close the browser

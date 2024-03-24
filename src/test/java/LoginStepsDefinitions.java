@@ -76,17 +76,27 @@ public class LoginStepsDefinitions {
 
     @When("I insert the invalidEmailAddress")
     public void iInsertTheInvalidEmailAddress() {
-        loginPage.setEmail("test@test.com");
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='field_EmailOrPhone']")));
+        loginPage.clickEmailBox();
+        loginPage.setEmail("test123@test.com");
+    }
+
+    @When("I insert the invalid password")
+    public void iInsertTheInvalidPassword() {
+        loginPage.clickPasswordBox();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='field_Password']")));
+        loginPage.setPassword("test2334");
     }
 
     @Then("an error message is displayed")
     public void anErrorMessageIsDisplayed() {
-
-        String expectedErrorMessage = "Diese E-Mail-Adresse gehört zu keinem Lidl Konto. Versuche es erneut oder erstelle ein Konto.\n" +
-                "\n";
+        String expectedErrorMessage = "Aus Sicherheitsgründen musst du nach 3 fehlgeschlagenen Anmeldeversuchen 30 Minuten warten, bevor du es erneut versuchen kannst.";
         loginPage.getErrorMessage();
         assertEquals(expectedErrorMessage, loginPage.getErrorMessage());
     }
+
 
 
 }
