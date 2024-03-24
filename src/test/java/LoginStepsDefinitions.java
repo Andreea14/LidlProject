@@ -29,28 +29,39 @@ public class LoginStepsDefinitions {
     }
 
 
-@And("I click on the My account section")
-public void iClickOnTheMyAccountSection() {
-    loginPage.clickAgree();
-    loginPage.clickAccount();
-}
+    @And("I click on the My account section")
+    public void iClickOnTheMyAccountSection() {
+        loginPage.clickAgree();
+        loginPage.clickAccount();
+    }
 
     @When("I entered the emailAddress")
     public void iEnteredTheEmailAddress() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='field_EmailOrPhone']")));
         loginPage.clickEmailBox();
         loginPage.setEmail("andreea.salavastru14@gmail.com");
     }
+
     @And("I press Next button")
     public void iPressNextButton() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='color_primary size_default mode_block role_next']")));
         loginPage.clickNext();
     }
 
     @And("I entered the password")
     public void iEnteredThePassword() {
+        loginPage.clickPasswordBox();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='field_Password']")));
+        loginPage.clickEmailBox();
         loginPage.setPassword("Alfabetic1492!");
     }
-
+    @And("I press Login button")
+    public void iPressLoginButton() {
+        loginPage.clickLoginButton();
+    }
 
     @Then("I am logged successfully")
     public void iAmLoggedSuccessfully() {
@@ -71,7 +82,7 @@ public void iClickOnTheMyAccountSection() {
     @Then("an error message is displayed")
     public void anErrorMessageIsDisplayed() {
 
-        String expectedErrorMessage ="Diese E-Mail-Adresse gehört zu keinem Lidl Konto. Versuche es erneut oder erstelle ein Konto.\n" +
+        String expectedErrorMessage = "Diese E-Mail-Adresse gehört zu keinem Lidl Konto. Versuche es erneut oder erstelle ein Konto.\n" +
                 "\n";
         loginPage.getErrorMessage();
         assertEquals(expectedErrorMessage, loginPage.getErrorMessage());
