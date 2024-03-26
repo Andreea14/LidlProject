@@ -10,10 +10,12 @@ public class LoginPage {
     private By submitButton=By.xpath("//button[@id='button_btn_submit_email']");
 
     private By passwordBox=By.xpath("//input[@id='field_Email']");
-    private By passwordField = By.xpath("//input[@id='field_Password']");
-   // private By submitButton=By.xpath("//button[@id='button_submit']");
+    private By passwordField = By.xpath("//input[@type='password']");
+    private By buttonSubmit = By.xpath("//button[@id='button_submit']");
     private By loginButton = By.xpath("//button[@id='button_btn_submit_email']");
-    private By errorMessage = By.className("//p[@class='error_EmailOrPhone']");
+    private By errorMessage = By.xpath("//*[@id=\"login-form\"]/div/section/div/div/div[3]/div/div[1]/div[2]/div[2]/p");
+
+     private By forgotPassword=By.xpath("//*[@id=\"login-form\"]/div/section/div/div/div[3]/div/div[1]/div[3]/a");
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -37,7 +39,7 @@ public class LoginPage {
     }
 
     public void clickPasswordBox() {
-        driver.findElement(passwordBox).click();
+        driver.findElement(passwordField).click();
     }
 
     public void setPassword(String password) {
@@ -45,10 +47,15 @@ public class LoginPage {
     }
 
     public void clickLoginButton() {
-        driver.findElement(loginButton).click();
+        driver.findElement(buttonSubmit).click();
     }
 
     public String getErrorMessage() {
         return driver.findElement(errorMessage).getText();
     }
+    public void clickForgotPasswordButton() {
+        driver.findElement(forgotPassword).click();
+    }
+
+
 }
